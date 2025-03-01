@@ -1,16 +1,16 @@
 package com.blog.appcenter_blog.domain.entity;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
-import lombok.Setter;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
+
 
 @Entity
 @Getter
-@Setter
+@NoArgsConstructor
 @Table(name = "member_table")
 public class MemberEntity {
 
@@ -40,7 +40,24 @@ public class MemberEntity {
     @Column(length = 1000)
     private String introduce;
 
-    // 회원과 게시글의 1:N 관계 설정
-    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<PostEntity> postList = new ArrayList<>();
+    @Builder
+    public MemberEntity(String loginId, String password, String nickname, String address, LocalDate birth, String phone, String introduce) {
+        this.loginId = loginId;
+        this.password = password;
+        this.nickname = nickname;
+        this.address = address;
+        this.birth = birth;
+        this.phone = phone;
+        this.introduce = introduce;
+    }
+
+//    이렇게 해도 되나? 질문
+    public MemberEntity updateMemberEntity(MemberEntity memberEntity){
+        this.nickname = memberEntity.getNickname();
+        this.address = memberEntity.getAddress();
+        this.birth = memberEntity.getBirth();
+        this.phone = memberEntity.getPhone();
+        this.introduce = memberEntity.getIntroduce();
+        return this;
+    }
 }
