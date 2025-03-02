@@ -35,6 +35,17 @@ public class ContentsService {
         return PostResponseDto.from(postEntity);
     }
 
+    //게시글 친구별 조회
+    @Transactional
+    public List<PostListResponseDto> getCategoryPosts(Long userId) {
+        List<PostEntity> postEntitiyList = postRepository.findAllByMember_UserId(userId);
+        List<PostListResponseDto> postListResponseDtoList = new ArrayList<>();
+        for (PostEntity postEntity : postEntitiyList) {
+            postListResponseDtoList.add(PostListResponseDto.from(postEntity));
+        }
+        return postListResponseDtoList;
+    }
+
     //게시글 전체 조회
     @Transactional
     public List<PostListResponseDto> getPostList() {

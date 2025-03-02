@@ -10,7 +10,7 @@ import lombok.Setter;
 @Getter
 @NoArgsConstructor
 @Table(name = "post_table")
-public class PostEntity {
+public class PostEntity extends BaseTimeEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

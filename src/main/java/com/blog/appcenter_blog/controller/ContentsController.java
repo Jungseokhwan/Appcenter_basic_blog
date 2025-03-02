@@ -31,6 +31,13 @@ public class ContentsController {
         return ResponseEntity.status(HttpStatus.OK).body(post);
     }
 
+    @Operation(summary = "게시글 친구별 조회")
+    @GetMapping("/category")
+    public ResponseEntity<List<PostListResponseDto>> getCategoryPosts(@RequestParam Long userId) {
+        List<PostListResponseDto> posts = contentsService.getCategoryPosts(userId);
+        return ResponseEntity.status(HttpStatus.OK).body(posts);
+    }
+
     @Operation(summary = "게시글 전체 조회")
     @GetMapping
     public ResponseEntity<List<PostListResponseDto>> getPostList() {
