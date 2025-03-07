@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Entity
 @Getter
@@ -23,7 +22,7 @@ public class PostEntity extends BaseTimeEntity{
     private String contents;
 
     @Column(nullable = false)
-    private boolean isMain;
+    private Boolean main;
 
     // 작성자(회원)와의 다대일(N:1) 관계
     @ManyToOne(fetch = FetchType.LAZY)
@@ -31,17 +30,17 @@ public class PostEntity extends BaseTimeEntity{
     private MemberEntity member;
 
     @Builder
-    public PostEntity(String title, String contents, boolean isMain, MemberEntity member) {
+    public PostEntity(String title, String contents, Boolean main, MemberEntity member) {
         this.title = title;
         this.contents = contents;
-        this.isMain = isMain;
+        this.main = main;
         this.member = member;
     }
 
     public PostEntity updatePostEntity(PostEntity postEntity) {
         this.title = postEntity.getTitle();
         this.contents = postEntity.getContents();
-        this.isMain = postEntity.isMain();
+        this.main = postEntity.getMain();
         return this;
     }
 }

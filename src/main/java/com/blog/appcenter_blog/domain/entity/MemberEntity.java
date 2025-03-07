@@ -30,7 +30,6 @@ public class MemberEntity extends BaseTimeEntity{
     @Column
     private String address;
 
-    //이렇게 받는게 맞는지 모르겠음
     @Column
     private LocalDate birth;
 
@@ -51,7 +50,6 @@ public class MemberEntity extends BaseTimeEntity{
         this.introduce = introduce;
     }
 
-//    이렇게 해도 되나? 질문
     public MemberEntity updateMemberEntity(MemberEntity memberEntity){
         this.nickname = memberEntity.getNickname();
         this.address = memberEntity.getAddress();

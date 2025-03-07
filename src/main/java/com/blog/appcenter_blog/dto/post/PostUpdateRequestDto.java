@@ -16,14 +16,14 @@ public class PostUpdateRequestDto {
     @NotBlank(message = "글을 작성해주세요.")
     private String contents;
 
-    private boolean isMain;
+    private Boolean main;
 
     public PostEntity toSave(MemberEntity member) {
         return PostEntity.builder()
                 .member(member)
                 .title(title)
                 .contents(contents)
-                .isMain(isMain)
+                .main(main)
                 .build();
     }
 

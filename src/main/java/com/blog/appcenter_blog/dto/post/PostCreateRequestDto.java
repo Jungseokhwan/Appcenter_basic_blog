@@ -3,6 +3,7 @@ package com.blog.appcenter_blog.dto.post;
 import com.blog.appcenter_blog.domain.entity.MemberEntity;
 import com.blog.appcenter_blog.domain.entity.PostEntity;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -16,14 +17,15 @@ public class PostCreateRequestDto {
     @NotBlank(message = "글을 작성해주세요.")
     private String contents;
 
-    private boolean isMain;
+    @NotNull
+    private Boolean main;
 
     public PostEntity toSave(MemberEntity member) {
         return PostEntity.builder()
                 .member(member)
                 .title(title)
                 .contents(contents)
-                .isMain(isMain)
+                .main(main)
                 .build();
     }
 }

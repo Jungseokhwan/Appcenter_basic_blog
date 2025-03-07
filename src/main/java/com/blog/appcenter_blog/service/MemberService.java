@@ -3,11 +3,14 @@ package com.blog.appcenter_blog.service;
 import com.blog.appcenter_blog.domain.entity.MemberEntity;
 import com.blog.appcenter_blog.domain.repository.MemberRepository;
 import com.blog.appcenter_blog.dto.member.*;
+import com.blog.appcenter_blog.exception.CustomException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.blog.appcenter_blog.exception.ErrorCode.*;
 
 @Service
 @RequiredArgsConstructor
@@ -19,7 +22,7 @@ public class MemberService {
     public MemberSignupResponseDto signupUser(MemberSignupRequestDto memberSignupRequestDto) {
         memberRepository.findByLoginId(memberSignupRequestDto.getLoginId())
                 .ifPresent(existingMember -> {
-                    throw new RuntimeException("로그인 아이디가 중복됩니다.");
+                    throw new CustomException(DUPLICATE_LOGINID);
                 });
 
         MemberEntity memberEntity = memberRepository.save(memberSignupRequestDto.toSave());// 실제 DB로 저장되는 부분
@@ -29,19 +32,19 @@ public class MemberService {
     //로그인
     public LoginResponseDto loginUser(LoginRequestDto loginRequestDto) {
         MemberEntity memberEntity = memberRepository.findByLoginId(loginRequestDto.getLoginId()).orElseThrow(
-                () -> new RuntimeException("회원 정보를 찾을 수 없습니다.")
+                () -> new CustomException(NOT_EXIST_ID)
         );
 
         if (memberEntity.getPassword().equals(loginRequestDto.getPassword())) {
             return LoginResponseDto.from(memberEntity);
         }
-        throw new RuntimeException("비밀번호가 일치하지 않습니다.");
+        throw new CustomException(UNAUTHORIZED_LOGIN);
     }
 
     //회원 정보 조회
     public MemberResponseDto getMemberInfo(Long userId) {
         MemberEntity memberEntity = memberRepository.findById(userId).orElseThrow(
-                () -> new RuntimeException("회원 정보를 찾을 수 없습니다.")
+                () -> new CustomException(NOT_EXIST_ID)
         );
         return MemberResponseDto.from(memberEntity);
     }
@@ -58,7 +61,9 @@ public class MemberService {
 
     //회원 정보 수정
     public MemberUpdateResponseDto updateMember(Long userId, MemberUpdateRequestDto memberUpdateRequestDto) {
-        MemberEntity existingMemberInfo = memberRepository.findById(userId).orElseThrow();
+        MemberEntity existingMemberInfo = memberRepository.findById(userId).orElseThrow(
+                () -> new CustomException(NOT_EXIST_ID)
+        );
         MemberEntity updateMemberInfo = memberRepository.save(existingMemberInfo.updateMemberEntity(memberUpdateRequestDto.toSave()));
         return MemberUpdateResponseDto.from(updateMemberInfo);
     }

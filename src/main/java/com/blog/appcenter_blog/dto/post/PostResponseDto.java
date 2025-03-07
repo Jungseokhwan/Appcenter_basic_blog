@@ -5,6 +5,9 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 @Getter
 @NoArgsConstructor
 public class PostResponseDto {
@@ -15,22 +18,30 @@ public class PostResponseDto {
 
     private String contents;
 
-    private boolean isMain;
+    private Boolean isMain;
+
+    private LocalDate postTime;
 
     @Builder
-    public PostResponseDto(String nickname, String title, String contents, boolean isMain) {
+    public PostResponseDto(String nickname, String title, String contents, Boolean isMain, LocalDate postTime) {
         this.nickname = nickname;
         this.title = title;
         this.contents = contents;
         this.isMain = isMain;
+        this.postTime = postTime;
+
     }
 
     public static PostResponseDto from(PostEntity post) {
+        LocalDateTime localDateTime = post.getUpdateAt();
+        LocalDate localDate = localDateTime.toLocalDate();
+
         return PostResponseDto.builder()
                 .nickname(post.getMember().getNickname())
                 .title(post.getTitle())
                 .contents(post.getContents())
-                .isMain(post.isMain())
+                .isMain(post.getMain())
+                .postTime(localDate)
                 .build();
     }
 }
