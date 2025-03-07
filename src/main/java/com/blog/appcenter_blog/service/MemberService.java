@@ -17,7 +17,12 @@ public class MemberService {
 
     //회원 가입
     public MemberSignupResponseDto signupUser(MemberSignupRequestDto memberSignupRequestDto) {
-        MemberEntity memberEntity = memberRepository.save(memberSignupRequestDto.toSave()); // 실제 DB로 저장되는 부분
+        memberRepository.findByLoginId(memberSignupRequestDto.getLoginId())
+                .ifPresent(existingMember -> {
+                    throw new RuntimeException("로그인 아이디가 중복됩니다.");
+                });
+
+        MemberEntity memberEntity = memberRepository.save(memberSignupRequestDto.toSave());// 실제 DB로 저장되는 부분
         return MemberSignupResponseDto.from(memberEntity);
     }
 
