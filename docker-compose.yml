@@ -7,6 +7,6 @@ services:
     volumes:
       - /home/serverking/seok-hwan:app/image
     ports:
-      - "8097:8080"
+      - "8097:8097"
     environment:
       TZ: "Asia/Seoul"
