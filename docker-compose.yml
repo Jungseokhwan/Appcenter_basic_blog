@@ -1,0 +1,12 @@
+version: '3.8'
+
+services:
+  springboot:
+    container_name: appcenter_blog
+    image: ${DOCKER_USER}/${DOCKER_REPO}:appcenter_blog  # Docker Hub에서 가져올 이미지
+    volumes:
+      - /home/serverking/seok-hwan:app/image
+    ports:
+      - "8097:8080"
+    environment:
+      TZ: "Asia/Seoul"

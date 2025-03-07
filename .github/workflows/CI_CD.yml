@@ -16,6 +16,8 @@ jobs:
           mkdir ./src/main/resources
           touch ./src/main/resources/application.yml
           echo "${{ secrets.SECRET_PROPERTIES }}" > ./src/main/resources/application.yml
+          touch /.env
+          echo "${{ secrests.ENV }}" > /.env
 
       - name: Set Java JDK 21
         uses: actions/setup-java@v4
