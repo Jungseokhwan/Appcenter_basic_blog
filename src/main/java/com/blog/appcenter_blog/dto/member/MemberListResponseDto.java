@@ -11,6 +11,8 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class MemberListResponseDto {
 
+    private Long userId;
+
     private String nickname;
 
     private String address;
@@ -20,7 +22,8 @@ public class MemberListResponseDto {
     private String phone;
 
     @Builder
-    public MemberListResponseDto(String nickname, String address, LocalDate birth, String phone) {
+    public MemberListResponseDto(Long userId, String nickname, String address, LocalDate birth, String phone) {
+        this.userId = userId;
         this.nickname = nickname;
         this.address = address;
         this.birth = birth;
@@ -29,6 +32,7 @@ public class MemberListResponseDto {
 
     public static MemberListResponseDto from(MemberEntity member) {
         return MemberListResponseDto.builder()
+                .userId(member.getUserId())
                 .nickname(member.getNickname())
                 .address(member.getAddress())
                 .birth(member.getBirth())

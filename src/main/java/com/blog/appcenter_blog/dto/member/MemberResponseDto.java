@@ -11,8 +11,6 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class MemberResponseDto {
 
-    private Long userId;
-
     private String nickname;
 
     private String address;
@@ -25,7 +23,6 @@ public class MemberResponseDto {
 
     @Builder
     public MemberResponseDto(MemberEntity memberEntity) {
-        this.userId = memberEntity.getUserId();
         this.nickname = memberEntity.getNickname();
         this.address = memberEntity.getAddress();
         this.birth = memberEntity.getBirth();
