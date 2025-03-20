@@ -12,6 +12,8 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class PostListResponseDto {
 
+    private Long postId;
+
     private String nickname;
 
     private String title;
@@ -21,7 +23,8 @@ public class PostListResponseDto {
     private LocalDate postTime;
 
     @Builder
-    public PostListResponseDto(String nickname, String title, String contents, LocalDate postTime) {
+    public PostListResponseDto(Long postId, String nickname, String title, String contents, LocalDate postTime) {
+        this.postId = postId;
         this.nickname = nickname;
         this.title = title;
         this.contents = contents;
@@ -33,6 +36,7 @@ public class PostListResponseDto {
         LocalDate localDate = localDateTime.toLocalDate();
 
         return PostListResponseDto.builder()
+                .postId(post.getPostId())
                 .nickname(post.getMember().getNickname())
                 .title(post.getTitle())
                 .contents(post.getContents())
