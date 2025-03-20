@@ -43,4 +43,5 @@ public class PostListResponseDto {
                 .postTime(localDate)
                 .build();
     }
+
 }
