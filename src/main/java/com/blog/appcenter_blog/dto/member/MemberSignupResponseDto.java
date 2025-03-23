@@ -9,18 +9,18 @@ public class MemberSignupResponseDto {
 
     private final Long userId;
 
-    private final String password;
+    private final String password; //삭제 예정
 
     @Builder
     public MemberSignupResponseDto(Long userId, String password) {
         this.userId = userId;
-        this.password = password;
+        this.password = password; //삭제 예정
     }
 
     public static MemberSignupResponseDto from(MemberEntity member) {
         return MemberSignupResponseDto.builder()
                 .userId(member.getUserId())
-                .password(member.getPassword())
+                .password(member.getPassword()) //삭제 예정
                 .build();
     }
 }
