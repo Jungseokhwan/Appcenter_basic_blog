@@ -3,24 +3,22 @@ package com.blog.appcenter_blog.dto.post;
 import com.blog.appcenter_blog.domain.entity.PostEntity;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Getter
-@NoArgsConstructor
 public class PostResponseDto {
 
-    private String nickname;
+    private final String nickname;
 
-    private String title;
+    private final String title;
 
-    private String contents;
+    private final String contents;
 
-    private Boolean isMain;
+    private final Boolean isMain;
 
-    private LocalDate postTime;
+    private final LocalDate postTime;
 
     @Builder
     public PostResponseDto(String nickname, String title, String contents, Boolean isMain, LocalDate postTime) {

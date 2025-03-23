@@ -3,17 +3,15 @@ package com.blog.appcenter_blog.dto.member;
 import com.blog.appcenter_blog.domain.entity.MemberEntity;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 @Getter
-@NoArgsConstructor
 public class LoginResponseDto {
 
-    private Long userId;
+    private final Long userId;
 
-    private String loginId;
+    private final String loginId;
 
-    private String nickname;
+    private final String nickname;
 
     @Builder
     public LoginResponseDto(Long userId, String loginId, String nickname) {

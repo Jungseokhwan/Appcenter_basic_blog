@@ -18,10 +18,10 @@ public class MemberSignupRequestDto {
     @NotBlank(message = "이름을 입력해주세요.")
     private String nickname;
 
-    public MemberEntity toSave() {
+    public MemberEntity toSave(String encodedPassword) {
         return MemberEntity.builder()
                 .loginId(loginId)
-                .password(password)
+                .password(encodedPassword)
                 .nickname(nickname)
                 .build();
     }

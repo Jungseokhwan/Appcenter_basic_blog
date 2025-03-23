@@ -3,23 +3,21 @@ package com.blog.appcenter_blog.dto.member;
 import com.blog.appcenter_blog.domain.entity.MemberEntity;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 
 @Getter
-@NoArgsConstructor
 public class MemberResponseDto {
 
-    private String nickname;
+    private final String nickname;
 
-    private String address;
+    private final String address;
 
-    private LocalDate birth;
+    private final LocalDate birth;
 
-    private String phone;
+    private final String phone;
 
-    private String introduce;
+    private final String introduce;
 
     @Builder
     public MemberResponseDto(MemberEntity memberEntity) {

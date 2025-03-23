@@ -5,7 +5,10 @@ import com.blog.appcenter_blog.domain.repository.MemberRepository;
 import com.blog.appcenter_blog.dto.member.*;
 import com.blog.appcenter_blog.exception.CustomException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,15 +20,23 @@ import static com.blog.appcenter_blog.exception.ErrorCode.*;
 public class MemberService {
 
     private final MemberRepository memberRepository;
+    private final PasswordEncoder passwordEncoder;
 
     //회원 가입
+    @Transactional
     public MemberSignupResponseDto signupUser(MemberSignupRequestDto memberSignupRequestDto) {
         memberRepository.findByLoginId(memberSignupRequestDto.getLoginId())
                 .ifPresent(existingMember -> {
                     throw new CustomException(DUPLICATE_LOGINID);
                 });
 
-        MemberEntity memberEntity = memberRepository.save(memberSignupRequestDto.toSave());// 실제 DB로 저장되는 부분
+        // 실제 DB로 저장되는 부분
+        MemberEntity memberEntity = memberRepository.save(
+                memberSignupRequestDto.toSave(
+                        passwordEncoder.encode(memberSignupRequestDto.getPassword())
+                )
+        );
+
         return MemberSignupResponseDto.from(memberEntity);
     }
 
@@ -35,10 +46,11 @@ public class MemberService {
                 () -> new CustomException(NOT_EXIST_ID)
         );
 
-        if (memberEntity.getPassword().equals(loginRequestDto.getPassword())) {
-            return LoginResponseDto.from(memberEntity);
+        if (!passwordEncoder.matches(loginRequestDto.getPassword(), memberEntity.getPassword())) {
+            throw new CustomException(UNAUTHORIZED_LOGIN);
         }
-        throw new CustomException(UNAUTHORIZED_LOGIN);
+
+        return LoginResponseDto.from(memberEntity);
     }
 
     //회원 정보 조회

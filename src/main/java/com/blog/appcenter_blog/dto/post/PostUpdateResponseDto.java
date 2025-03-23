@@ -3,13 +3,11 @@ package com.blog.appcenter_blog.dto.post;
 import com.blog.appcenter_blog.domain.entity.PostEntity;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 @Getter
-@NoArgsConstructor
 public class PostUpdateResponseDto {
 
-    private Long postId;
+    private final Long postId;
 
     @Builder
     public PostUpdateResponseDto(Long postId) {
